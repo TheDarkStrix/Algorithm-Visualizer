@@ -26,13 +26,18 @@ export default class SortVisualizer extends React.Component {
     const { array } = this.state;
 
     return (
-      <>
+      <div className="barContainer">
         {array.map((value, index) => (
-          <div className="array-bar" key={index}>
-            {value}
-          </div>
+          <div
+            className="array-bar"
+            key={index}
+            style={{
+              height: `${value}px`,
+            }}
+          ></div>
         ))}
-      </>
+        <button onClick={() => this.resetArray()}>New Array</button>
+      </div>
     );
   }
 }

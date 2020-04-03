@@ -1,7 +1,14 @@
+.barContainer {
+    position: absolute;
+}
+
+.barContainer>button {
+    display: block;
+}
+
 .array-bar {
     width: 2px;
     background-color: blue;
-    display: inline;
-    height: 30px;
-    margin: 0 30px;
+    display: inline-block;
+    margin: 0 2px;
 }
