@@ -7,7 +7,7 @@ import { getSelectionsortAnimations } from "../sortAlgorithms/SelectionsortAlgor
 import "./SortVisualizer.css";
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 1;
+const ANIMATION_SPEED_MS = 3;
 
 // Change this value for the number of bars (value) in the array.
 const NUMBER_OF_ARRAY_BARS = 310;
@@ -131,13 +131,6 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  selectionSort() {
-    let array = Array.from({ length: 40 }, () =>
-      Math.floor(Math.random() * 40)
-    );
-    getSelectionsortAnimations(array);
-  }
-
   bubbleSort() {
     // let array = Array.from({ length: 40 }, () =>
     //   Math.floor(Math.random() * 40)
@@ -168,7 +161,40 @@ export default class SortingVisualizer extends React.Component {
       }
     }
   }
-
+  selectionSort() {
+    // let array = Array.from({ length: 40 }, () =>
+    //   Math.floor(Math.random() * 40)
+    // );
+    // getQuickSortAnimations(array);
+    const [animations, sortArray] = getSelectionsortAnimations(
+      this.state.array
+    );
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange =
+        animations[i][0] === "firstcomparision" ||
+        animations[i][0] === "secondcomparision";
+      const arrayBars = document.getElementsByClassName("array-bar");
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === "firstcomparision"
+            ? SECONDARY_COLOR
+            : PRIMARY_COLOR;
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [temp, barIndex, newHeight] = animations[i];
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
   render() {
     const { array } = this.state;
 

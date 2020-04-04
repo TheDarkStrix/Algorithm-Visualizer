@@ -1,19 +1,24 @@
 export function getSelectionsortAnimations(array) {
-  //let animations = [];
+  let animations = [];
   let auxillaryArray = array.slice();
   console.log("Original : " + array);
-  selectionSort(auxillaryArray);
+  selectionSort(auxillaryArray, animations);
   console.log("Sorted : " + auxillaryArray);
-  return auxillaryArray;
+  return [animations, auxillaryArray];
 }
 
-function selectionSort(auxillaryArray) {
+function selectionSort(auxillaryArray, animations) {
   let N = auxillaryArray.length;
   for (let i = 0; i < N - 1; i++) {
     let startIndex = i;
-    for (let j = i + 1; j < N; j++)
+    for (let j = i + 1; j < N; j++) {
+      animations.push(["firstcomparision", j, startIndex]);
+      animations.push(["secondcomparision", j, startIndex]);
       if (auxillaryArray[j] < auxillaryArray[startIndex]) startIndex = j;
-    swap(auxillaryArray, startIndex, i);
+    }
+    animations.push(["swap", startIndex, auxillaryArray[i]]);
+    animations.push(["swap", i, auxillaryArray[startIndex]]);
+    if (startIndex != i) swap(auxillaryArray, startIndex, i);
   }
 }
 function swap(auxillaryArray, firstIndex, secondIndex) {
