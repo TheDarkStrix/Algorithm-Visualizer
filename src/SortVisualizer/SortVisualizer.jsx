@@ -61,12 +61,40 @@ export default class SortingVisualizer extends React.Component {
   }
 
   quickSort() {
-    let array = Array.from({ length: 40 }, () =>
-      Math.floor(Math.random() * 40)
-    );
-    getQuickSortAnimations(array);
-  }
+    // let array = Array.from({ length: 40 }, () =>
+    //   Math.floor(Math.random() * 40)
+    // );
+    // getQuickSortAnimations(array);
+    const [animations] = getQuickSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length - 1; i++) {
+      const arrayBars = document.getElementsByClassName("array-bar");
+      const isColorChange = i % 6 === 0 || i % 6 === 1;
+      if (isColorChange === true) {
+        const color = i % 6 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        const [barOneIndex, barTwoIndex] = animations[i];
+        if (barOneIndex === -1) {
+          continue;
+        }
 
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [barIndex, newHeight] = animations[i];
+        if (barIndex === -1) {
+          continue;
+        }
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
   heapSort() {
     // We leave it as an exercise to the viewer of this code to implement this method.
   }
@@ -92,7 +120,7 @@ export default class SortingVisualizer extends React.Component {
         ))}
         <button onClick={() => this.resetArray()}>New Array</button>
         <button onClick={() => this.mergeSort()}>Merge Sort</button>
-        <button onClick={() => this.quickSort()}>Merge Sort</button>
+        <button onClick={() => this.quickSort()}>Quick Sort</button>
       </div>
     );
   }
