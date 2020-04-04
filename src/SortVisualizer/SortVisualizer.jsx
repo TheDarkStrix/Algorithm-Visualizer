@@ -1,5 +1,6 @@
 import React from "react";
 import { getMergeSortAnimations } from "../sortAlgorithms/MergesortAlgorithm.js";
+import { getQuickSortAnimations } from "../sortAlgorithms/QuicksortAlgorithm.js";
 import "./SortVisualizer.css";
 
 // Change this value for the speed of the animations.
@@ -60,7 +61,10 @@ export default class SortingVisualizer extends React.Component {
   }
 
   quickSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
+    let array = Array.from({ length: 40 }, () =>
+      Math.floor(Math.random() * 40)
+    );
+    getQuickSortAnimations(array);
   }
 
   heapSort() {
@@ -88,6 +92,7 @@ export default class SortingVisualizer extends React.Component {
         ))}
         <button onClick={() => this.resetArray()}>New Array</button>
         <button onClick={() => this.mergeSort()}>Merge Sort</button>
+        <button onClick={() => this.quickSort()}>Merge Sort</button>
       </div>
     );
   }
