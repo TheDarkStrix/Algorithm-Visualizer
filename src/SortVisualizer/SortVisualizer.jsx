@@ -97,10 +97,33 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   insertionSort() {
-    let array = Array.from({ length: 40 }, () =>
-      Math.floor(Math.random() * 40)
-    );
-    getInsertionsortAnimations(array);
+    //this.disableSortButtons();
+    const [animations] = getInsertionsortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange =
+        animations[i][0] === "firstcomparision" ||
+        animations[i][0] === "secondcomparision";
+      const arrayBars = document.getElementsByClassName("array-bar");
+      if (isColorChange === true) {
+        const color =
+          animations[i][0] === "firstcomparision"
+            ? SECONDARY_COLOR
+            : PRIMARY_COLOR;
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [temp, barIndex, newHeight] = animations[i];
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
   }
 
   bubbleSort() {
