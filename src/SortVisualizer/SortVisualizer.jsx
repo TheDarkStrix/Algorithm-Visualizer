@@ -2,6 +2,8 @@ import React from "react";
 import { getMergeSortAnimations } from "../sortAlgorithms/MergesortAlgorithm.js";
 import { getQuickSortAnimations } from "../sortAlgorithms/QuicksortAlgorithm.js";
 import { getInsertionsortAnimations } from "../sortAlgorithms/InsertionsortAlgorithm.js";
+import { getBubblesortAnimations } from "../sortAlgorithms/BubblesortAlgorithm.js";
+import { getSelectionsortAnimations } from "../sortAlgorithms/SelectionsortAlgorithm.js";
 import "./SortVisualizer.css";
 
 // Change this value for the speed of the animations.
@@ -129,6 +131,13 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+  selectionSort() {
+    let array = Array.from({ length: 40 }, () =>
+      Math.floor(Math.random() * 40)
+    );
+    getSelectionsortAnimations(array);
+  }
+
   bubbleSort() {
     // let array = Array.from({ length: 40 }, () =>
     //   Math.floor(Math.random() * 40)
@@ -179,6 +188,11 @@ export default class SortingVisualizer extends React.Component {
         <button onClick={() => this.mergeSort()}>Merge Sort</button>
         <button onClick={() => this.quickSort()}>Quick Sort</button>
         <button onClick={() => this.insertionSort()}>Insertion Sort</button>
+<<<<<<< HEAD
+=======
+        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+        <button onClick={() => this.selectionSort()}>Selection Sort</button>
+>>>>>>> 61ce559... Add Selection Sort Algorithm
       </div>
     );
   }
