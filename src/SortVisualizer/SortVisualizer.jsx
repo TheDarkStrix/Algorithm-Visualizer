@@ -1,7 +1,20 @@
 import React from "react";
+import { getMergeSortAnimations } from "../sortAlgorithms/sortAlgorithm.js";
 import "./SortVisualizer.css";
 
-export default class SortVisualizer extends React.Component {
+// Change this value for the speed of the animations.
+const ANIMATION_SPEED_MS = 1;
+
+// Change this value for the number of bars (value) in the array.
+const NUMBER_OF_ARRAY_BARS = 310;
+
+// This is the main color of the array bars.
+const PRIMARY_COLOR = "turquoise";
+
+// This is the color of array bars that are being compared throughout the animations.
+const SECONDARY_COLOR = "red";
+
+export default class SortingVisualizer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -16,32 +29,69 @@ export default class SortVisualizer extends React.Component {
 
   resetArray() {
     const array = [];
-    for (let i = 0; i < 100; i++) {
-      array.push(randomIntFromInterval(5, 1000));
+    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+      array.push(randomIntFromInterval(5, 730));
     }
-    this.setState({ array }); //reset the state of the new array after push
+    this.setState({ array });
+  }
+
+  mergeSort() {
+    const animations = getMergeSortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array-bar");
+      const isColorChange = i % 3 !== 2;
+      if (isColorChange) {
+        const [barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        setTimeout(() => {
+          const [barOneIndex, newHeight] = animations[i];
+          const barOneStyle = arrayBars[barOneIndex].style;
+          barOneStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
+
+  quickSort() {
+    // We leave it as an exercise to the viewer of this code to implement this method.
+  }
+
+  heapSort() {
+    // We leave it as an exercise to the viewer of this code to implement this method.
+  }
+
+  bubbleSort() {
+    // We leave it as an exercise to the viewer of this code to implement this method.
   }
 
   render() {
     const { array } = this.state;
 
     return (
-      <div className="barContainer">
-        {array.map((value, index) => (
+      <div className="array-container">
+        {array.map((value, idx) => (
           <div
             className="array-bar"
-            key={index}
+            key={idx}
             style={{
+              backgroundColor: PRIMARY_COLOR,
               height: `${value}px`,
             }}
           ></div>
         ))}
         <button onClick={() => this.resetArray()}>New Array</button>
+        <button onClick={() => this.mergeSort()}>Merge Sort</button>
       </div>
     );
   }
 }
-
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
