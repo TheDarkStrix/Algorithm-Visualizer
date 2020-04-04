@@ -97,7 +97,10 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   insertionSort() {
-    //this.disableSortButtons();
+    // let array = Array.from({ length: 40 }, () =>
+    //   Math.floor(Math.random() * 40)
+    // );
+    // getQuickSortAnimations(array);
     const [animations] = getInsertionsortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
@@ -127,7 +130,34 @@ export default class SortingVisualizer extends React.Component {
   }
 
   bubbleSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
+    // let array = Array.from({ length: 40 }, () =>
+    //   Math.floor(Math.random() * 40)
+    // );
+    // getQuickSortAnimations(array);
+    const [animations, sortArray] = getBubblesortAnimations(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const isColorChange = i % 4 === 0 || i % 4 === 1;
+      const arrayBars = document.getElementsByClassName("array-bar");
+      if (isColorChange === true) {
+        const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        const [barOneIndex, barTwoIndex] = animations[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        const [barIndex, newHeight] = animations[i];
+        if (barIndex === -1) {
+          continue;
+        }
+        const barStyle = arrayBars[barIndex].style;
+        setTimeout(() => {
+          barStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
   }
 
   render() {
