@@ -7,14 +7,14 @@ import { getSelectionsortAnimations } from "../sortAlgorithms/SelectionsortAlgor
 import "./SortVisualizer.css";
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 10;
+let ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 50;
+let NUMBER_OF_ARRAY_BARS = 20;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "#ffe400";
-
+let MAX_ARRAY;
 // This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = "#d50000";
 
@@ -28,13 +28,30 @@ export default class SortingVisualizer extends React.Component {
   }
 
   componentDidMount() {
+    this.checkdisplay();
     this.resetArray();
+  }
+
+  checkdisplay() {
+    if (window.innerWidth <= 767 && window.innerHeight <= 360) {
+      MAX_ARRAY = 200;
+      NUMBER_OF_ARRAY_BARS = 20;
+    } else if (window.innerWidth <= 767 && window.innerHeight <= 480) {
+      MAX_ARRAY = 350;
+      NUMBER_OF_ARRAY_BARS = 20;
+    } else if (window.innerWidth < 767) {
+      MAX_ARRAY = 500;
+      NUMBER_OF_ARRAY_BARS = 20;
+    } else if (window.innerWidth > 768) {
+      MAX_ARRAY = 600;
+      NUMBER_OF_ARRAY_BARS = 50;
+    }
   }
 
   resetArray() {
     const array = [];
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(randomIntFromInterval(5, 500));
+      array.push(randomIntFromInterval(5, MAX_ARRAY));
     }
     this.setState({ array });
   }
