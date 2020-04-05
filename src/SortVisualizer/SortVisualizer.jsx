@@ -7,16 +7,16 @@ import { getSelectionsortAnimations } from "../sortAlgorithms/SelectionsortAlgor
 import "./SortVisualizer.css";
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 3;
+const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 310;
+const NUMBER_OF_ARRAY_BARS = 50;
 
 // This is the main color of the array bars.
-const PRIMARY_COLOR = "turquoise";
+const PRIMARY_COLOR = "#ffe400";
 
 // This is the color of array bars that are being compared throughout the animations.
-const SECONDARY_COLOR = "red";
+const SECONDARY_COLOR = "#d50000";
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export default class SortingVisualizer extends React.Component {
   resetArray() {
     const array = [];
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
-      array.push(randomIntFromInterval(5, 730));
+      array.push(randomIntFromInterval(5, 500));
     }
     this.setState({ array });
   }
@@ -199,27 +199,34 @@ export default class SortingVisualizer extends React.Component {
     const { array } = this.state;
 
     return (
-      <div className="array-container">
-        {array.map((value, idx) => (
-          <div
-            className="array-bar"
-            key={idx}
-            style={{
-              backgroundColor: PRIMARY_COLOR,
-              height: `${value}px`,
-            }}
-          ></div>
-        ))}
-        <button onClick={() => this.resetArray()}>New Array</button>
-        <button onClick={() => this.mergeSort()}>Merge Sort</button>
-        <button onClick={() => this.quickSort()}>Quick Sort</button>
-        <button onClick={() => this.insertionSort()}>Insertion Sort</button>
-<<<<<<< HEAD
-=======
-        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-        <button onClick={() => this.selectionSort()}>Selection Sort</button>
->>>>>>> 61ce559... Add Selection Sort Algorithm
-      </div>
+      <>
+        <div className="header">
+          <a onClick={() => this.resetArray()}>New Array</a>
+          <a onClick={() => this.mergeSort()}>Merge Sort</a>
+          <a onClick={() => this.quickSort()}>Quick Sort</a>
+          <a onClick={() => this.insertionSort()}>Insertion Sort</a>
+          <a onClick={() => this.bubbleSort()}>Bubble Sort</a>
+          <a onClick={() => this.selectionSort()}>Selection Sort</a>
+        </div>
+        <div className="array-container">
+          {array.map((value, idx) => (
+            <div
+              className="array-bar"
+              key={idx}
+              style={{
+                backgroundColor: PRIMARY_COLOR,
+                height: `${value}px`,
+                width: "5px",
+                backgroundColor: "#0f9",
+                color: "transparent",
+                fontSize: "8px",
+              }}
+            >
+              {value}
+            </div>
+          ))}
+        </div>
+      </>
     );
   }
 }

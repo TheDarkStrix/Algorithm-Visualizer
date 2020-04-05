@@ -1,14 +1,29 @@
-.barContainer {
-    position: absolute;
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap');
+
+body {
+    background: url(/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-.barContainer>button {
-    display: block;
+.header {
+    width: 100%;
+    display: inline-block;
+    background-color: rgba(47, 47, 47, 0.516);
+    padding: 1.6em 0;
 }
 
 .array-bar {
-    width: 2px;
-    background-color: blue;
+    padding-top: 7px;
+    margin: 2px;
     display: inline-block;
-    margin: 0 2px;
+}
+
+a {
+    padding: 1em 0.6em;
+    font-family: 'Kalam', cursive;
+    color: rgb(0, 255, 153);
+    font-size: 18px;
 }
