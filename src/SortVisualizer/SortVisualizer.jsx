@@ -21,18 +21,20 @@ const SECONDARY_COLOR = "#d50000";
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       array: [],
     };
   }
 
   componentDidMount() {
+    // Checks the display parameter , when the DOM is loaded
     this.checkdisplay();
-    this.resetArray();
+    this.initalSet();
   }
 
   checkdisplay() {
+    //Adjusts the No of BARS and the Height of the Bars according the screen size
+    //Note : This is no responsive design .
     if (window.innerWidth <= 767 && window.innerHeight <= 360) {
       MAX_ARRAY = 200;
       NUMBER_OF_ARRAY_BARS = 20;
@@ -48,12 +50,16 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  resetArray() {
+  initalSet() {
     const array = [];
     for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
       array.push(randomIntFromInterval(5, MAX_ARRAY));
     }
     this.setState({ array });
+  }
+
+  resetArray() {
+    window.location.reload();
   }
 
   mergeSort() {
@@ -81,10 +87,6 @@ export default class SortingVisualizer extends React.Component {
   }
 
   quickSort() {
-    // let array = Array.from({ length: 40 }, () =>
-    //   Math.floor(Math.random() * 40)
-    // );
-    // getQuickSortAnimations(array);
     const [animations] = getQuickSortAnimations(this.state.array);
     for (let i = 0; i < animations.length - 1; i++) {
       const arrayBars = document.getElementsByClassName("array-bar");
@@ -116,10 +118,6 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   insertionSort() {
-    // let array = Array.from({ length: 40 }, () =>
-    //   Math.floor(Math.random() * 40)
-    // );
-    // getQuickSortAnimations(array);
     const [animations] = getInsertionsortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
@@ -149,11 +147,7 @@ export default class SortingVisualizer extends React.Component {
   }
 
   bubbleSort() {
-    // let array = Array.from({ length: 40 }, () =>
-    //   Math.floor(Math.random() * 40)
-    // );
-    // getQuickSortAnimations(array);
-    const [animations, sortArray] = getBubblesortAnimations(this.state.array);
+    const [animations] = getBubblesortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = i % 4 === 0 || i % 4 === 1;
       const arrayBars = document.getElementsByClassName("array-bar");
@@ -179,13 +173,7 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   selectionSort() {
-    // let array = Array.from({ length: 40 }, () =>
-    //   Math.floor(Math.random() * 40)
-    // );
-    // getQuickSortAnimations(array);
-    const [animations, sortArray] = getSelectionsortAnimations(
-      this.state.array
-    );
+    const [animations] = getSelectionsortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
         animations[i][0] === "firstcomparision" ||
@@ -231,10 +219,8 @@ export default class SortingVisualizer extends React.Component {
               className="array-bar"
               key={idx}
               style={{
-                backgroundColor: PRIMARY_COLOR,
                 height: `${value}px`,
                 width: "5px",
-                backgroundColor: "#0f9",
                 color: "transparent",
                 fontSize: "8px",
               }}

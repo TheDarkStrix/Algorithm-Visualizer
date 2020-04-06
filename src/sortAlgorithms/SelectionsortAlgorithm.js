@@ -1,9 +1,7 @@
 export function getSelectionsortAnimations(array) {
   let animations = [];
   let auxillaryArray = array.slice();
-  console.log("Original : " + array);
   selectionSort(auxillaryArray, animations);
-  console.log("Sorted : " + auxillaryArray);
   return [animations, auxillaryArray];
 }
 

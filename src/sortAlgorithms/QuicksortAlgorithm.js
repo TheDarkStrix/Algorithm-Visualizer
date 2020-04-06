@@ -2,8 +2,7 @@ export function getQuickSortAnimations(array) {
   let animations = [];
   let auxillaryArray = array.slice();
   quickSort(auxillaryArray, 0, auxillaryArray.length - 1, animations);
-  array = auxillaryArray;
-  return [animations, array];
+  return [animations, auxillaryArray];
 }
 
 function quickSort(auxillaryArray, startIndex, endIndex, animations) {
